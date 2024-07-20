@@ -9,7 +9,10 @@
                 </div>
                 <div class="d-block">
                     <h2 class="h5 mb-3">Hi, Jane</h2>
-                    <a href="../../pages/examples/sign-in.html"
+                    <form id="logoutForm" action="{{ route('logout') }}" method="post">
+                        @csrf
+                    </form>
+                    <span id="logout"
                         class="btn btn-secondary btn-sm d-inline-flex align-items-center">
                         <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -18,7 +21,7 @@
                             </path>
                         </svg>
                         Sign Out
-                    </a>
+                    </span>
                 </div>
             </div>
             <div class="collapse-close d-md-none">
@@ -40,7 +43,16 @@
                         <img src="../../assets/img/brand/light.svg" height="20" width="20"
                             alt="Volt Logo">
                     </span> --}}
-                    <span class="mt-1 ms-1 sidebar-text">Volt Overview</span>
+
+                    @role('admin')
+                        <span class="mt-1 ms-1 sidebar-text">Hello Admin</span>
+                    @endrole
+                    @role('teacher')
+                        <span class="mt-1 ms-1 sidebar-text">Hello Teacher</span>
+                    @endrole
+                    @role('user')
+                        <span class="mt-1 ms-1 sidebar-text">Hello {{ Auth::user()->name }}</span>
+                    @endrole
                 </a>
             </li>
             <li class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
@@ -101,7 +113,7 @@
                     <span class="sidebar-text">Settings</span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="https://demo.themesberg.com/volt-pro/pages/calendar.html" target="_blank"
                     class="nav-link d-flex justify-content-between">
                     <span>
@@ -171,8 +183,8 @@
                         </li>
                     </ul>
                 </div>
-            </li>
-            <li class="nav-item">
+            </li> --}}
+            {{-- <li class="nav-item">
                 <span class="nav-link  collapsed  d-flex justify-content-between align-items-center"
                     data-bs-toggle="collapse" data-bs-target="#submenu-pages">
                     <span>
@@ -235,49 +247,47 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> --}}
 
-            <li class="nav-item">
-                <span class="nav-link  collapsed  d-flex justify-content-between align-items-center"
-                    data-bs-toggle="collapse" data-bs-target="#submenu-pages">
-                    <span>
-                        <span class="sidebar-icon">
-                            <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20"
+            @can('view users')
+                <li class="nav-item">
+                    <span class="nav-link  collapsed  d-flex justify-content-between align-items-center"
+                        data-bs-toggle="collapse" data-bs-target="#submenu-pages">
+                        <span>
+                            <span class="sidebar-icon">
+                                <i class="fa-solid fa-users"></i>
+                            </span>
+                            <span class="sidebar-text">Users</span>
+                        </span>
+                        <span class="link-arrow">
+                            <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
-                                    d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                     clip-rule="evenodd"></path>
-                                <path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"></path>
                             </svg>
                         </span>
-                        <span class="sidebar-text">Users</span>
                     </span>
-                    <span class="link-arrow">
-                        <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </span>
-                </span>
-                <div class="multi-level collapse " role="list" id="submenu-pages" aria-expanded="false">
-                    <ul class="flex-column nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.users.list') }}">
-                                <span class="sidebar-text">List</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../../pages/examples/sign-up.html">
-                                <span class="sidebar-text">Create New User</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+                    <div class="multi-level collapse " role="list" id="submenu-pages" aria-expanded="false">
+                        <ul class="flex-column nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.users.list') }}">
+                                    <span class="sidebar-text">List</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../../pages/examples/sign-up.html">
+                                    <span class="sidebar-text">Create New User</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endcan
 
-            <li class="nav-item">
+
+
+            {{-- <li class="nav-item">
                 <span class="nav-link  collapsed  d-flex justify-content-between align-items-center"
                     data-bs-toggle="collapse" data-bs-target="#submenu-components">
                     <span>
@@ -369,7 +379,7 @@
                     </span>
                     <span>Upgrade to Pro</span>
                 </a>
-            </li>
+            </li>  --}}
         </ul>
     </div>
 </nav>

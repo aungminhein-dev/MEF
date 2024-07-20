@@ -14,5 +14,5 @@
 
  <!-- Volt CSS -->
  <link type="text/css" href="{{ asset('admin_ui/css/datatable.css') }}" rel="stylesheet">
-
+ {{-- <link type="text/css" href="{{ asset('admin_ui/css/fontawesome.min.css') }}" rel="stylesheet"> --}}
  <link type="text/css" href="{{ asset('admin_ui/css/volt.css') }}" rel="stylesheet">

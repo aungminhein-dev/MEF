@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="title" content="Volt - Free Bootstrap 5 Dashboard">
     <meta name="author" content="Themesberg">
-
+    <script src="https://kit.fontawesome.com/bd51c84785.js" crossorigin="anonymous"></script>
     @include('admin.layout.style')
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
 
@@ -43,6 +43,7 @@
     </main>
 
     @include('admin.layout.script')
+    
     @yield('scripts')
 </body>
 

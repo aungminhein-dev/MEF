@@ -36,16 +36,24 @@
 <script async defer src="https://buttons.github.io/buttons.js') }}"></script>
 
 <!-- Volt JS -->
+<script src="{{ asset('admin_ui/assets/js/jquery.js') }} "></script>
 
- <script>
-     function generateUsername() {
-         const nameInput = document.getElementById('name').value;
-         const username = nameInput.toLowerCase().replace(/\s+/g, '_');
-         document.getElementById('username').value = username;
-     }
- </script>
- <script src="{{ asset('admin_ui/assets/js/jquery.js') }} "></script>
+
+<script>
+    function generateUsername() {
+        const nameInput = document.getElementById('name').value;
+        const username = nameInput.toLowerCase().replace(/\s+/g, '_');
+        document.getElementById('username').value = username;
+    }
+    $('#logout').click(function(){
+        logout()
+    })
+
+    function logout() {
+        $('#logoutForm').submit()
+    }
+</script>
 <script src="{{ asset('admin_ui/assets/js/datatable.min.js') }} "></script>
 <script src="{{ asset('admin_ui/assets/js/simple-datatable.js') }} "></script>
 <script src="{{ asset('admin_ui/assets/js/datatable.js') }} "></script>
- <script src="{{ asset('admin_ui/assets/js/volt.js') }} "></script>
+<script src="{{ asset('admin_ui/assets/js/volt.js') }} "></script>
