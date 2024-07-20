@@ -27753,20 +27753,17 @@ label {
     }
 }
 
-.table-flush td,
-.table-flush th {
+.table-flush td,.table-flush th {
     border-left: 0;
-    border-right: 0;
+    border-right: 0
 }
 
-.table-flush tbody tr:first-child td,
-.table-flush tbody tr:first-child th {
-    border-top: 0;
+.table-flush tbody tr:first-child td,.table-flush tbody tr:first-child th {
+    border-top: 0
 }
 
-.table-flush tbody tr:last-child td,
-.table-flush tbody tr:last-child th {
-    border-bottom: 0;
+.table-flush tbody tr:last-child td,.table-flush tbody tr:last-child th {
+    border-bottom: 0
 }
 
 .card .table {

@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\SettingController;
-use App\Http\Controllers\HomeController;
-
 
 Route::controller(HomeController::class)->group(function(){
     Route::get('/','home')->name('home');
@@ -18,8 +19,12 @@ Route::controller(HomeController::class)->group(function(){
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     Route::prefix('admin')->controller(AdminController::class)->group(function(){
         Route::get('dashboard','dashboard')->name('admin.dashboard');
-        Route::get('profile/{id}','profile')->name('admin.profile');
     });
     Route::get('settings/{id}',[SettingController::class,'index'])->name('settings');
+    Route::post('profile/update/{id}',[ProfileController::class,'update'])->name('profile.update');
+    Route::prefix('users')->controller(UserController::class)->group(function(){
+        Route::get('list','list')->name('admin.users.list');
+    });
+
 });
 

@@ -17,8 +17,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     public function update(User $user, array $input): void
     {
-
-        Validator::make($input, [
+        $result  = Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
@@ -26,22 +25,23 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'phone' => ['nullable', 'string', 'max:20'],
             'address' => ['nullable', 'string', 'max:255'],
             'gender' => ['nullable', 'in:male,female,secret'],
+            'birthday' => ['nullable', 'date'], // Ensure birthday is validated as a date
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
             $user->updateProfilePhoto($input['photo']);
         }
-        if ($input['email'] !== $user->email &&
-            $user instanceof MustVerifyEmail) {
+        if ($input['email'] !== $user->email && $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
         } else {
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
                 'username' => $input['username'],
+                'birthday' => $input['birthday'],
                 'phone' => $input['phone'],
                 'address' => $input['address'],
-                'gender' => $input['gender']
+                'gender' => $input['gender'],
             ])->save();
         }
     }

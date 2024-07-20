@@ -134,25 +134,34 @@
         <div class="col-12 col-xl-8">
             <div class="card card-body border-0 shadow mb-4">
                 <h2 class="h5 mb-4">General information</h2>
-                <form action="{{ route('user-profile-information.update') }}" method="post" enctype="multipart/form-data">
-                    @method('put')
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form action="{{ route('profile.update', Auth::user()->id) }}" method="post"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div>
-                                <label for="first_name">Name</label>
+                                <label for="name">Name</label>
                                 <input class="form-control" value="{{ Auth::user()->name }}" type="text"
-                                    placeholder="Enter your name">
+                                    name="name" id="name" placeholder="Enter your name">
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input class="form-control" name="email" id="email" value="{{ Auth::user()->email }}" type="email" placeholder="name@company.com"
-                                >
+                                <input class="form-control" name="email" id="email"
+                                    value="{{ Auth::user()->email }}" type="email" placeholder="name@company.com">
                             </div>
                         </div>
-
                     </div>
                     <div class="row align-items-center">
                         <div class="col-md-6 mb-3">
@@ -166,33 +175,36 @@
                                             clip-rule="evenodd"></path>
                                     </svg>
                                 </span>
-                                <input data-datepicker="" name="birthday" class="form-control" id="birthday" type="text"
-                                    placeholder="dd/mm/yyyy" value="{{ Auth::user()->birthday }}">
+                                <input data-datepicker="" name="birthday" class="form-control" id="birthday"
+                                    type="text" placeholder="YYYY-MM-DD" value="{{ Auth::user()->birthday }}">
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="gender">Gender</label>
                             <select class="form-select mb-0" name="gender" id="gender" aria-label="Select gender">
-                                <option selected>Gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="secret">Secret</option>
+                                <option {{ auth()->user()->gender == ' ' ? 'selected' : ' ' }} disabled>Gender</option>
+                                <option {{ auth()->user()->gender == 'male' ? 'selected' : ' ' }} value="male">Male
+                                </option>
+                                <option {{ auth()->user()->gender == 'female' ? 'selected' : ' ' }} value="female">Female
+                                </option>
+                                <option {{ auth()->user()->gender == 'secret' ? 'selected' : ' ' }} value="secret">Secret
+                                </option>
                             </select>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div>
-                                <label for="last_name">User Name</label>
-                                <input class="form-control" name="username" value="{{ Auth::user()->username }}" id="user_name" type="text"
-                                    placeholder="User Name">
+                                <label for="username">User Name</label>
+                                <input class="form-control" name="username" value="{{ Auth::user()->username }}"
+                                    id="username" type="text" placeholder="User Name">
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="phone">Phone</label>
-                                <input class="form-control" value="{{ Auth::user()->phone }}" id="phone" type="number" placeholder="+12-345 678 910"
-                                    name="phone">
+                                <input class="form-control" value="{{ Auth::user()->phone }}" id="phone"
+                                    type="number" placeholder="+12-345 678 910" name="phone">
                             </div>
                         </div>
                     </div>
@@ -201,14 +213,15 @@
                         <div class="col-sm-9 mb-3">
                             <div class="form-group">
                                 <label for="address">Address</label>
-                                <input class="form-control" id="address" type="text"
-                                    placeholder="Enter your home address" name="address">
+                                <input class="form-control" id="address" type="text" name="address"
+                                    value="{{ Auth::user()->address }}" placeholder="Enter your home address">
                             </div>
                         </div>
                         <div class="col-sm-3 mb-3">
                             <div class="form-group">
                                 <label for="number">Number</label>
-                                <input class="form-control" id="number" type="number" placeholder="No.">
+                                <input class="form-control" id="number" type="number" name="number"
+                                    placeholder="No.">
                             </div>
                         </div>
                     </div>
@@ -216,7 +229,8 @@
                         <div class="col-sm-4 mb-3">
                             <div class="form-group">
                                 <label for="city">City</label>
-                                <input class="form-control" id="city" type="text" placeholder="City">
+                                <input class="form-control" id="city" type="text" name="city"
+                                    placeholder="City">
                             </div>
                         </div>
                         <div class="col-sm-4 mb-3">
@@ -280,7 +294,8 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="zip">ZIP</label>
-                                <input class="form-control" id="zip" type="tel" placeholder="ZIP">
+                                <input class="form-control" id="zip" type="tel" name="zip"
+                                    placeholder="ZIP">
                             </div>
                         </div>
                     </div>
@@ -288,6 +303,7 @@
                         <button class="btn btn-gray-800 mt-2 animate-up-2" type="submit">Save all</button>
                     </div>
                 </form>
+
             </div>
             <div class="card card-body border-0 shadow mb-4 mb-xl-0">
                 <h2 class="h5 mb-4">Alerts & Notifications</h2>
@@ -337,10 +353,11 @@
             <div class="row">
                 <div class="col-12 mb-4">
                     <div class="card shadow border-0 text-center p-0">
-                        <div class="profile-cover rounded-top" data-background="{{ asset('admin_ui/assets/img/profile-cover.jpg')}}">
+                        <div class="profile-cover rounded-top"
+                            data-background="{{ asset('admin_ui/assets/img/profile-cover.jpg') }}">
                         </div>
                         <div class="card-body pb-5">
-                            <img src="{{ asset('admin_ui/assets/img/team/profile-picture-1.jpg')}}"
+                            <img src="{{ asset('admin_ui/assets/img/team/profile-picture-1.jpg') }}"
                                 class="avatar-xl rounded-circle mx-auto mt-n7 mb-4" alt="Neil Portrait">
                             <h4 class="h3">Neil Sims</h4>
                             <h5 class="fw-normal">Senior Software Engineer</h5>
@@ -364,7 +381,8 @@
                         <div class="d-flex align-items-center">
                             <div class="me-3">
                                 <!-- Avatar -->
-                                <img class="rounded avatar-xl" src="{{ asset('admin_ui/assets/img/team/profile-picture-3.jpg')}}"
+                                <img class="rounded avatar-xl"
+                                    src="{{ asset('admin_ui/assets/img/team/profile-picture-3.jpg') }}"
                                     alt="change avatar">
                             </div>
                             <div class="file-field">
@@ -393,7 +411,8 @@
                         <div class="d-flex align-items-center">
                             <div class="me-3">
                                 <!-- Avatar -->
-                                <img class="rounded avatar-xl" src="{{ asset('admin_ui/assets/img/profile-cover.jpg')}}" alt="change cover">
+                                <img class="rounded avatar-xl" src="{{ asset('admin_ui/assets/img/profile-cover.jpg') }}"
+                                    alt="change cover">
                             </div>
                             <div class="file-field">
                                 <div class="d-flex justify-content-xl-center ms-xl-3">
@@ -418,51 +437,15 @@
             </div>
         </div>
     </div>
-    <div class="theme-settings card bg-gray-800 pt-2 collapse" id="theme-settings">
-        <div class="card-body bg-gray-800 text-white pt-4">
-            <button type="button" class="btn-close theme-settings-close" aria-label="Close" data-bs-toggle="collapse"
-                href="#theme-settings" role="button" aria-expanded="false" aria-controls="theme-settings"></button>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <p class="m-0 mb-1 me-4 fs-7">Open source <span role="img" aria-label="gratitude">💛</span></p>
-                <a class="github-button" href="https://github.com/themesberg/volt-bootstrap-5-dashboard"
-                    data-color-scheme="no-preference: dark; light: light; dark: light;" data-icon="octicon-star"
-                    data-size="large" data-show-count="true"
-                    aria-label="Star themesberg/volt-bootstrap-5-dashboard on GitHub">Star</a>
-            </div>
-            <a href="https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard" target="_blank"
-                class="btn btn-secondary d-inline-flex align-items-center justify-content-center mb-3 w-100">
-                Download
-                <svg class="icon icon-xs ms-2" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                        d="M2 9.5A3.5 3.5 0 005.5 13H9v2.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 15.586V13h2.5a4.5 4.5 0 10-.616-8.958 4.002 4.002 0 10-7.753 1.977A3.5 3.5 0 002 9.5zm9 3.5H9V8a1 1 0 012 0v5z"
-                        clip-rule="evenodd"></path>
-                </svg>
-            </a>
-            <p class="fs-7 text-gray-300 text-center">Available in the following technologies:</p>
-            <div class="d-flex justify-content-center">
-                <a class="me-3" href="https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard"
-                    target="_blank">
-                    <img src="{{ asset('admin_ui/assets/img/technologies/bootstrap-5-logo.svg')}}" class="image image-xs">
-                </a>
-                <a href="https://demo.themesberg.com/volt-react-dashboard/#/" target="_blank">
-                    <img src="{{ asset('admin_ui/assets/img/technologies/react-logo.svg')}}" class="image image-xs">
-                </a>
-            </div>
-        </div>
+
     </div>
 
-    <div class="card theme-settings bg-gray-800 theme-settings-expand" id="theme-settings-expand">
-        <div class="card-body bg-gray-800 text-white rounded-top p-3 py-2">
-            <span class="fw-bold d-inline-flex align-items-center h6">
-                <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                        d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
-                        clip-rule="evenodd"></path>
-                </svg>
-                Settings
-            </span>
-        </div>
-    </div>
+@endsection
+@section('scripts')
+    <script>
+       $('#birthday').datepicker({
+        format : "yyyy-mm-dd",
+        autoclose: true,
+       })
+    </script>
 @endsection

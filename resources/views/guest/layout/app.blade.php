@@ -62,11 +62,6 @@
         $('#logoutForm').submit()
     }
 
-    function generateUsername() {
-            const nameInput = document.getElementById('name').value;
-            const username = nameInput.toLowerCase().replace(/\s+/g, '_');
-            document.getElementById('username').value = username;
-        }
    </script>
 </body>
 

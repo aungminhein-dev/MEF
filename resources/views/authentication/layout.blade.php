@@ -18,5 +18,12 @@
         @yield('content')
     </main>
     @include('admin.layout.script')
+    <script>
+        function generateUsername() {
+            const nameInput = document.getElementById('name').value;
+            const username = nameInput.toLowerCase().replace(/\s+/g, '_');
+            document.getElementById('username').value = username;
+        }
+    </script>
 </body>
 </html>
