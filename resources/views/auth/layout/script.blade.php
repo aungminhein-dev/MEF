@@ -45,7 +45,7 @@
         const username = nameInput.toLowerCase().replace(/\s+/g, '_');
         document.getElementById('username').value = username;
     }
-    $('#logout').click(function(){
+    $('#logout').click(function() {
         logout()
     })
 

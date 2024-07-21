@@ -9,7 +9,7 @@
     <meta name="title" content="Volt - Free Bootstrap 5 Dashboard">
     <meta name="author" content="Themesberg">
 
-   @include('admin.layout.style')
+   @include('auth.layout.style')
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
 
 </head>
@@ -17,7 +17,7 @@
     <main>
         @yield('content')
     </main>
-    @include('admin.layout.script')
+    @include('auth.layout.script')
     <script>
         function generateUsername() {
             const nameInput = document.getElementById('name').value;

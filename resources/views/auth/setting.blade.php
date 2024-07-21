@@ -1,6 +1,7 @@
-@extends('admin.layout.app')
+@extends('auth.layout.app')
 @section('title', 'Settings')
 @section('content')
+
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div>
             <div class="dropdown">
@@ -442,10 +443,4 @@
 
 @endsection
 @section('scripts')
-    <script>
-       $('#birthday').datepicker({
-        format : "yyyy-mm-dd",
-        autoclose: true,
-       })
-    </script>
 @endsection

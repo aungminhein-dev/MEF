@@ -33,6 +33,7 @@
     </div>
     @include('guest.layout.nav')
     <main>
+      
        @yield('content')
 
 

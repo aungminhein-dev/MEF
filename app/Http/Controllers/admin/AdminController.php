@@ -8,14 +8,10 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
-    public function dashboard()
-    {
-        return view('admin.dashboard');
-    }
 
     public function profile($id)
     {
         $user = User::where('id',$id)->get();
-        return view('admin.profile',compact('user'));
+        return view('authenticated_user.profile',compact('user'));
     }
 }

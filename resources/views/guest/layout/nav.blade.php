@@ -35,9 +35,10 @@
                                             </li>
                                             <li><a href="contact.html">Contact</a></li>
                                             <!-- Button -->
-                                            <li class="button-header margin-left "><a href="#"
-                                                    class="btn">Join</a></li>
+
                                             @auth
+                                                <li class="button-header margin-left "><a href="{{ route('dashboard') }}"
+                                                        class="btn">Dashborad</a></li>
                                                 <li class="button-header" onclick="logout()"><a href="#"
                                                         class="btn btn3">Log
                                                         out</a></li>
@@ -46,6 +47,8 @@
                                                     @csrf
                                                 </form>
                                             @else
+                                                <li class="button-header margin-left "><a href="#"
+                                                        class="btn">Join</a></li>
                                                 <li class="button-header"><a href="{{ route('login') }}"
                                                         class="btn btn3">Log
                                                         in</a></li>

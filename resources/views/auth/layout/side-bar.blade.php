@@ -38,14 +38,14 @@
         </div>
         <ul class="nav flex-column pt-3 pt-md-0">
             <li class="nav-item">
-                <a href="../../index.html" class="nav-link d-flex align-items-center">
+                <a href="{{ route('dashboard') }}" class="nav-link d-flex align-items-center">
                     {{-- <span class="sidebar-icon">
                         <img src="../../assets/img/brand/light.svg" height="20" width="20"
                             alt="Volt Logo">
                     </span> --}}
 
                     @role('admin')
-                        <span class="mt-1 ms-1 sidebar-text">Hello Admin</span>
+                        <span class="mt-1 ms-1 sidebar-text">Hello {{ Str::before(Auth::user()->name, ' ') }}</span>
                     @endrole
                     @role('teacher')
                         <span class="mt-1 ms-1 sidebar-text">Hello Teacher</span>
@@ -55,8 +55,8 @@
                     @endrole
                 </a>
             </li>
-            <li class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <a href="{{ route('admin.dashboard') }}" class="nav-link">
+            <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}" class="nav-link">
                     <span class="sidebar-icon">
                         <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -250,13 +250,16 @@
             </li> --}}
 
             @can('view users')
-                <li class="nav-item">
+                <li class="nav-item {{ request()->is('users/*') ? 'active' : '' }}">
                     <span class="nav-link  collapsed  d-flex justify-content-between align-items-center"
                         data-bs-toggle="collapse" data-bs-target="#submenu-pages">
                         <span>
-                            <span class="sidebar-icon">
-                                <i class="fa-solid fa-users"></i>
-                            </span>
+                            <span class="sidebar-icon"><svg
+                                class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                  d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z">
+                                </path>
+                              </svg> </span>
                             <span class="sidebar-text">Users</span>
                         </span>
                         <span class="link-arrow">
@@ -270,13 +273,13 @@
                     </span>
                     <div class="multi-level collapse " role="list" id="submenu-pages" aria-expanded="false">
                         <ul class="flex-column nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.users.list') }}">
+                            <li class="nav-item {{ request()->routeIs('admin.users.list') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.users-list') }}">
                                     <span class="sidebar-text">List</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../../pages/examples/sign-up.html">
+                            <li class="nav-item {{ request()->routeIs('admin.create-user') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.create-user') }}">
                                     <span class="sidebar-text">Create New User</span>
                                 </a>
                             </li>

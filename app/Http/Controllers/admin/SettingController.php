@@ -9,6 +9,6 @@ class SettingController extends Controller
 {
     public function index($id)
     {
-        return view('admin.setting');
+        return view('auth.setting');
     }
 }
