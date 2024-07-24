@@ -16,19 +16,19 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // Create roles
+        // Ensure roles are created
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $teacherRole = Role::firstOrCreate(['name' => 'teacher']);
         $userRole = Role::firstOrCreate(['name' => 'user']);
 
         // Define the password for all users
-        $password = Hash::make('password123'); // Use a hashed password for security
+        $password = Hash::make('password'); // Use a hashed password for security
 
-        // Create users
+        // Create users with assigned roles
         $users = [
             [
                 'name' => 'Admin User',
-                'email' => 'admin@example.com',
+                'email' => 'admin@gmail.com',
                 'phone' => '1234567890',
                 'address' => '123 Admin St',
                 'birthday' => '1980-01-01',

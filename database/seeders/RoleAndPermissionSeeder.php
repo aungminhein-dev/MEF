@@ -21,12 +21,5 @@ class RoleAndPermissionSeeder extends Seeder
 
         $teacherRole = Role::create(['name' => 'teacher']);
         $teacherRole->givePermissionTo('view users');
-
-        // Assign roles to users
-        $admin = User::find(1); // Assuming user with ID 1 is admin
-        $admin->assignRole('admin');
-
-        $teacher = User::find(2); // Assuming user with ID 2 is teacher
-        $teacher->assignRole('teacher');
     }
 }

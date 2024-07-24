@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EducationTypeController;
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'home')->name('home');
@@ -19,8 +20,9 @@ Route::controller(HomeController::class)->group(function () {
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
     // Admin Routes
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::resource('education-types', EducationTypeController::class);
 
-    
+
     Route::middleware(['role:admin'])->group(function () {
         Route::controller(UserController::class)->prefix('users')->group(function () {
             Route::get('list', 'list')->name('admin.users-list');
