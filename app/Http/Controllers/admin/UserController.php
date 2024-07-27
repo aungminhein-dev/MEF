@@ -46,12 +46,11 @@ class UserController extends Controller
 
             $user = User::create($data);
 
-            $role = Role::findOrFail($request->role_id);
+            $role = Role::findOrFail($request->roleId);
             $user->assignRole($role);
-
             return redirect()->route('admin.users-list');
         } catch (Throwable $th) {
-            return $th;
+            return response()->json($th);
         }
     }
     public function edit($encodedId)

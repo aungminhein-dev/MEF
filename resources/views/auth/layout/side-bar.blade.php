@@ -321,6 +321,44 @@
                     </div>
                 </li>
             @endcan
+            @can('view users')
+                <li class="nav-item {{ request()->is('manage-roles/*') ? 'active' : '' }}">
+                    <span class="nav-link  collapsed  d-flex justify-content-between align-items-center"
+                        data-bs-toggle="collapse" data-bs-target="#submenu-roles">
+                        <span>
+                            <span class="sidebar-icon"><svg class="icon icon-xs me-2" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z">
+                                    </path>
+                                </svg> </span>
+                            <span class="sidebar-text">Manage Roles</span>
+                        </span>
+                        <span class="link-arrow">
+                            <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </span>
+                    </span>
+                    <div class="multi-level collapse " role="list" id="submenu-roles" aria-expanded="false">
+                        <ul class="flex-column nav">
+                            <li class="nav-item {{ request()->routeIs('manage-roles.index') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('manage-roles.index') }}">
+                                    <span class="sidebar-text">List</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->routeIs('manage-roles.create') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('manage-roles.create') }}">
+                                    <span class="sidebar-text">Create New User</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endcan
 
 
 

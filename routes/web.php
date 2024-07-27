@@ -3,11 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\admin\UserController;
-use App\Http\Controllers\admin\AdminController;
-use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\EducationTypeController;
+use App\Http\Controllers\RolePermissionController;
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'home')->name('home');
@@ -21,6 +21,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     // Admin Routes
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::resource('education-types', EducationTypeController::class);
+    Route::resource('manage-roles', RolePermissionController::class);
 
 
     Route::middleware(['role:admin'])->group(function () {
